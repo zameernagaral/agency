@@ -4,6 +4,7 @@
 import Link from "next/link";
 import { motion, Variants } from "framer-motion";
 import { FiArrowUpRight } from "react-icons/fi";
+import MagneticButton from "./components/MagneticButton"; // Import the component
 
 /* Container stagger */
 const containerVariants: Variants = {
@@ -31,7 +32,7 @@ export default function Home() {
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden py-24 px-6 md:px-12 lg:px-24 max-w-7xl mx-auto">
       
-      {/* Ambient glow */}
+      {/* Ambient glow (Kept exactly as requested) */}
       <div className="absolute -top-40 -right-40 w-[500px] h-[500px] bg-purple-400/20 blur-3xl rounded-full" />
       <div className="absolute top-1/3 -left-40 w-[500px] h-[500px] bg-blue-400/20 blur-3xl rounded-full" />
 
@@ -72,44 +73,26 @@ export default function Home() {
           and convert attention into action.
         </motion.p>
 
-      {/* CTAs */}
-<motion.div
-  variants={itemVariants}
-  className="flex flex-col sm:flex-row gap-5 justify-center"
->
-  {/* Primary CTA */}
-  <motion.div
-    whileHover={{ scale: 1.06, rotateX: 8, rotateY: -8 }}
-    transition={{ type: "spring", stiffness: 260 }}
-    className="[transform-style:preserve-3d]"
-  >
-    <Link
-      href="/portfolio"
-      className="flex items-center justify-center gap-2 px-9 py-4 rounded-full font-bold text-lg
-                 bg-black text-white shadow-lg hover:shadow-2xl transition-all"
-    >
-      View our work
-      <FiArrowUpRight />
-    </Link>
-  </motion.div>
+        {/* CTAs - UPDATED WITH MAGNETIC BUTTONS */}
+        <motion.div
+          variants={itemVariants}
+          className="flex flex-col sm:flex-row gap-5 justify-center items-center"
+        >
+          {/* Primary Magnetic Button */}
+          <Link href="/projects">
+            <MagneticButton className="flex items-center gap-2 bg-black text-white shadow-xl hover:bg-gray-900 hover:shadow-2xl">
+              View our work
+              <FiArrowUpRight />
+            </MagneticButton>
+          </Link>
 
-  {/* Secondary CTA — SAME PHYSICS, LOWER PRIORITY */}
-  <motion.div
-    whileHover={{ scale: 1.04, rotateX: 6, rotateY: -6 }}
-    transition={{ type: "spring", stiffness: 240 }}
-    className="[transform-style:preserve-3d]"
-  >
-    <Link
-      href="/services"
-      className="flex items-center justify-center gap-2 px-9 py-4 rounded-full font-bold text-lg
-                 bg-white text-black border border-gray-200
-                 hover:border-black hover:bg-gray-50 transition-all"
-    >
-      Our services
-    </Link>
-  </motion.div>
-</motion.div>
-
+          {/* Secondary Magnetic Button */}
+          <Link href="/services">
+            <MagneticButton className="bg-white text-black border border-gray-200 hover:border-black hover:bg-gray-50">
+              Our services
+            </MagneticButton>
+          </Link>
+        </motion.div>
 
         {/* Trust micro-copy */}
         <motion.p

@@ -29,8 +29,9 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: smooth; /* This gives you standard native smooth scrolling for links */
 }
+
 
 body {
   color: var(--foreground);
@@ -136,7 +137,6 @@ button {
 
 /* -------------------------
    OPTIONAL: SUBTLE GRAIN
-   (COMMENT OUT IF NOT NEEDED)
 -------------------------- */
 body::before {
   content: "";

@@ -1,131 +1,97 @@
 "use client";
+import { useEffect, useState } from "react";
+import { createClient } from '@supabase/supabase-js';
 import { motion } from "framer-motion";
-import Link from "next/link";
-import { FiArrowRight } from "react-icons/fi";
+import TiltCard from "../components/TiltCard";
+import { FiGithub, FiTwitter, FiUser } from "react-icons/fi";
+import { supabase } from '@/app/lib/supabase'; // Import from your new file
 
-interface Project {
-  id: number;
-  title: string;
-  category: string;
-  imageColor: string;
-  slug: string;
-}
+export default function TeamPage() {
+  const [team, setTeam] = useState<any[]>([]);
 
-const projects: Project[] = [
-  {
-    id: 1,
-    title: "FinTech Dashboard",
-    category: "Web App",
-    imageColor: "from-blue-100 to-blue-200",
-    slug: "fintech-dashboard",
-  },
-  {
-    id: 2,
-    title: "Modern E-commerce",
-    category: "Shopify",
-    imageColor: "from-purple-100 to-purple-200",
-    slug: "modern-ecommerce",
-  },
-  {
-    id: 3,
-    title: "SaaS Landing Page",
-    category: "Web Design",
-    imageColor: "from-green-100 to-green-200",
-    slug: "saas-landing",
-  },
-  {
-    id: 4,
-    title: "AI Startup Identity",
-    category: "Branding",
-    imageColor: "from-orange-100 to-orange-200",
-    slug: "ai-identity",
-  },
-];
+  useEffect(() => {
+    const fetchTeam = async () => {
+      // Fetch profiles from Supabase
+      const { data } = await supabase.from('profiles').select('*');
+      if (data) setTeam(data);
+    };
+    fetchTeam();
+  }, []);
 
-export default function Portfolio() {
   return (
-    <section className="relative py-28 px-6 md:px-12 lg:px-24 max-w-7xl mx-auto overflow-hidden">
-      {/* Ambient glow */}
-      <div className="absolute -top-40 -right-40 w-[500px] h-[500px] bg-purple-400/20 blur-3xl rounded-full" />
-      <div className="absolute top-1/3 -left-40 w-[500px] h-[500px] bg-blue-400/20 blur-3xl rounded-full" />
-
-      {/* Header */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="mb-20 max-w-3xl"
-      >
-        <h1 className="text-5xl md:text-6xl font-extrabold mb-6">
-          Selected{" "}
-          <span className="bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
-            Work
-          </span>
-        </h1>
-        <p className="text-xl text-gray-600">
-          Real products. Real outcomes. Built for startups that move fast.
-        </p>
-      </motion.div>
-
-      {/* Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-        {projects.map((project, index) => (
-          <motion.div
-            key={project.id}
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: index * 0.1 }}
-            whileHover={{ rotateX: 8, rotateY: -8, scale: 1.02 }}
-            className="group relative [transform-style:preserve-3d]"
-          >
-            <Link href={`/portfolio/${project.slug}`}>
-              {/* Card */}
-              <div className="relative rounded-3xl bg-white border border-gray-100 shadow-sm hover:shadow-2xl transition-all overflow-hidden">
-                
-                {/* Image */}
-                <div
-                  className={`aspect-[4/3] bg-gradient-to-br ${project.imageColor} relative overflow-hidden`}
-                >
-                  {/* Parallax overlay */}
-                  <motion.div
-                    whileHover={{ scale: 1.08 }}
-                    transition={{ duration: 0.6 }}
-                    className="absolute inset-0 bg-black/5"
-                  />
-
-                  {/* View label */}
-                  <div className="absolute bottom-6 left-6 px-4 py-2 rounded-full bg-white/80 backdrop-blur text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
-                    View case study →
-                  </div>
-                </div>
-
-                {/* Content */}
-                <div className="p-6 flex justify-between items-end">
-                  <div>
-                    <span className="text-sm font-medium text-gray-500">
-                      {project.category}
-                    </span>
-                    <h3 className="text-2xl font-bold mt-1 group-hover:text-blue-600 transition-colors">
-                      {project.title}
-                    </h3>
-                  </div>
-
-                  <motion.div
-                    whileHover={{ x: 4 }}
-                    className="w-11 h-11 rounded-full border border-gray-200 flex items-center justify-center group-hover:bg-black group-hover:border-black group-hover:text-white transition-all"
-                  >
-                    <FiArrowRight className="text-lg" />
-                  </motion.div>
-                </div>
-
-                {/* Glow */}
-                <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
-              </div>
-            </Link>
-          </motion.div>
-        ))}
+    <div className="relative min-h-screen pt-32 px-6 pb-20 selection:bg-pink-100">
+      
+      {/* Background Blobs */}
+      <div className="fixed inset-0 pointer-events-none -z-10">
+        <div className="absolute top-1/3 right-1/4 w-[400px] h-[400px] bg-pink-100/40 blur-[80px] rounded-full" />
+        <div className="absolute bottom-1/3 left-1/4 w-[400px] h-[400px] bg-blue-100/40 blur-[80px] rounded-full" />
       </div>
-    </section>
+
+      <div className="max-w-7xl mx-auto">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center mb-20 max-w-3xl mx-auto"
+        >
+          <span className="text-sm font-bold uppercase tracking-widest text-pink-600 mb-2 block">Our Squad</span>
+          <h1 className="text-5xl md:text-7xl font-black mb-6 tracking-tight">
+            Meet the <br/>
+            <span className="bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent">
+              minds.
+            </span>
+          </h1>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {team.length === 0 ? (
+            <p className="col-span-3 text-center text-gray-400">Loading team members...</p>
+          ) : (
+            team.map((member, index) => (
+              <motion.div 
+                key={member.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                className="h-[350px]"
+              >
+                <TiltCard className="bg-white/50 backdrop-blur-sm rounded-[2rem] p-8 border border-white/60 shadow-lg hover:shadow-2xl transition-all group flex flex-col items-center text-center h-full justify-between">
+                  
+                  <div className="relative">
+                    {/* Avatar Circle */}
+                    <div className="w-24 h-24 rounded-full bg-gradient-to-br from-gray-100 to-white shadow-inner flex items-center justify-center text-4xl text-gray-300 mb-6 mx-auto overflow-hidden border-4 border-white">
+                         {/* If avatar_url exists, show image, else show icon */}
+                         {member.avatar_url ? (
+                           <img src={member.avatar_url} alt={member.full_name} className="w-full h-full object-cover" />
+                         ) : (
+                           <FiUser />
+                         )}
+                    </div>
+                    
+                    {/* Role Badge (Admin or Member) */}
+                    <span className={`absolute -bottom-2 left-1/2 -translate-x-1/2 px-3 py-1 text-[10px] font-bold uppercase tracking-widest rounded-full border ${member.role === 'admin' ? 'bg-black text-white border-black' : 'bg-white text-gray-500 border-gray-200'}`}>
+                      {member.role || 'Member'}
+                    </span>
+                  </div>
+
+                  <div>
+                    <h3 className="text-2xl font-bold mb-1">{member.full_name || member.email?.split('@')[0] || "Team Member"}</h3>
+                    <p className="text-sm text-gray-500 font-medium">
+                      {member.role === 'admin' ? 'Co-Founder & Lead' : 'Creative Developer'}
+                    </p>
+                  </div>
+
+                  {/* Social Icons (Mocked for now) */}
+                  <div className="flex gap-4 mt-6 opacity-0 group-hover:opacity-100 transition-opacity translate-y-2 group-hover:translate-y-0 duration-300">
+                    <button className="w-8 h-8 rounded-full bg-gray-50 hover:bg-black hover:text-white flex items-center justify-center transition-colors"><FiTwitter /></button>
+                    <button className="w-8 h-8 rounded-full bg-gray-50 hover:bg-black hover:text-white flex items-center justify-center transition-colors"><FiGithub /></button>
+                  </div>
+
+                </TiltCard>
+              </motion.div>
+            ))
+          )}
+        </div>
+      </div>
+    </div>
   );
 }

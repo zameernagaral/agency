@@ -1,69 +1,43 @@
 "use client";
-
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { FiInstagram, FiTwitter, FiLinkedin, FiArrowUpRight } from "react-icons/fi";
+import { FiInstagram, FiTwitter, FiLinkedin, FiArrowUpRight, FiGithub } from "react-icons/fi";
 
 export default function Footer() {
   return (
-    <motion.footer
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.6 }}
-      className="relative bg-white border-t border-gray-100 py-16 md:py-24 overflow-hidden"
-    >
-      {/* Ambient glow */}
-      <div className="absolute -top-32 -right-32 w-96 h-96 bg-purple-400/20 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 -left-32 w-96 h-96 bg-blue-400/20 rounded-full blur-3xl" />
+    <footer className="relative bg-white border-t border-gray-100 pt-20 pb-10 overflow-hidden">
+      
+      {/* Ambient Footer Glow */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-gradient-to-b from-gray-50 to-transparent -z-10" />
 
-      <div className="relative px-6 md:px-12 lg:px-24 max-w-7xl mx-auto flex flex-col md:flex-row justify-between gap-14">
+      <div className="px-6 md:px-12 lg:px-24 max-w-7xl mx-auto flex flex-col md:flex-row justify-between gap-14 mb-20">
         
-        {/* BRAND */}
+        {/* BRAND COLUMN */}
         <div className="max-w-sm">
-          <Link
-            href="/"
-            className="text-3xl font-extrabold tracking-tight inline-flex items-center gap-1"
-          >
-            AGENCY
-            <span className="bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
-              .
-            </span>
+          <Link href="/" className="text-3xl font-black tracking-tighter inline-flex items-center gap-1">
+            AGENCY<span className="text-blue-600">.</span>
           </Link>
 
-          <p className="mt-5 text-gray-500 text-sm leading-relaxed">
+          <p className="mt-6 text-gray-500 text-sm leading-relaxed">
             We design & build digital products that feel premium, move fast,
             and convert users into believers.
           </p>
 
-          {/* Mini CTA */}
-          <Link
-            href="/contact"
-            className="inline-flex items-center gap-2 mt-6 text-sm font-semibold text-black group"
-          >
+          <Link href="/contact" className="inline-flex items-center gap-2 mt-8 text-sm font-bold text-black group">
             Start a project
             <FiArrowUpRight className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
           </Link>
         </div>
 
-        {/* LINKS */}
+        {/* LINKS COLUMN */}
         <div className="flex gap-16 flex-wrap">
           <div>
-            <h4 className="font-bold mb-5">Sitemap</h4>
-            <ul className="space-y-3 text-sm text-gray-600">
-              {[
-                { label: "Home", href: "/" },
-                { label: "Services", href: "/services" },
-                { label: "Work", href: "/portfolio" },
-                { label: "Contact", href: "/contact" },
-              ].map((item, i) => (
-                <li key={i}>
-                  <Link
-                    href={item.href}
-                    className="relative group hover:text-black transition-colors"
-                  >
-                    {item.label}
-                    <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-gradient-to-r from-blue-500 to-purple-500 transition-all group-hover:w-full" />
+            <h4 className="font-bold mb-6 text-sm uppercase tracking-widest text-gray-400">Sitemap</h4>
+            <ul className="space-y-4 text-sm font-medium text-gray-600">
+              {['Home', 'Services', 'Projects', 'Team', 'Contact'].map((item) => (
+                <li key={item}>
+                  <Link href={item === 'Home' ? '/' : `/${item.toLowerCase() === 'team' ? 'portfolio' : item.toLowerCase()}`} className="hover:text-black transition-colors">
+                    {item}
                   </Link>
                 </li>
               ))}
@@ -72,19 +46,14 @@ export default function Footer() {
 
           {/* SOCIALS */}
           <div>
-            <h4 className="font-bold mb-5">Socials</h4>
+            <h4 className="font-bold mb-6 text-sm uppercase tracking-widest text-gray-400">Socials</h4>
             <div className="flex gap-4">
-              {[FiTwitter, FiInstagram, FiLinkedin].map((Icon, i) => (
+              {[FiTwitter, FiInstagram, FiLinkedin, FiGithub].map((Icon, i) => (
                 <motion.a
                   key={i}
                   href="#"
-                  whileHover={{
-                    rotateX: 12,
-                    rotateY: -12,
-                    scale: 1.1,
-                  }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                  className="w-11 h-11 rounded-full bg-gray-50 flex items-center justify-center text-gray-600 hover:text-white hover:bg-black shadow-sm hover:shadow-xl [transform-style:preserve-3d]"
+                  whileHover={{ y: -5 }}
+                  className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-black hover:text-white transition-all shadow-sm"
                 >
                   <Icon />
                 </motion.a>
@@ -94,10 +63,12 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* BOTTOM BAR */}
-      <div className="relative mt-16 border-t border-gray-100 pt-8 text-center text-xs text-gray-400">
-        © {new Date().getFullYear()} AGENCY. Built with taste, not templates.
+      {/* COPYRIGHT */}
+      <div className="border-t border-gray-100 pt-8 text-center">
+        <p className="text-xs font-semibold text-gray-400">
+          © {new Date().getFullYear()} AGENCY. Built with Next.js & Supabase.
+        </p>
       </div>
-    </motion.footer>
+    </footer>
   );
 }
